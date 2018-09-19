@@ -1,20 +1,18 @@
 {
-  "name": "electron-quick-start",
+  "name": "EDDIELoadMonitor",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "An Electron application to display EDDIE stats",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/andylaw/electron-load-reporting",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "University of Edinburgh",
+    "EDDIE",
+    "load monitoring"
   ],
-  "author": "GitHub",
+  "author": "Andy Law",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^2.0.0"
