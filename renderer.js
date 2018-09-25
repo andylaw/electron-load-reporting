@@ -1,7 +1,8 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
-ds = require('./app/js/datasource.js')
+ds = require('./app/js/datasource.js');
+d3 = require('d3');
 
 function setColour () {
     sp = document.getElementById('statsPanel');
@@ -16,11 +17,20 @@ function renderStatus(value) {
 }
 
 
-let data = ds();
-let statsPanel = document.getElementById('statsPanel');
+let node_data = ds();
+// let statsPanel = document.getElementById('statsPanel');
+//
+// statsPanel.innerHTML = "";
+//
+// data.forEach(function(value) {
+//     statsPanel.innerHTML += renderStatus(value);
+// });
+//
+//
 
-statsPanel.innerHTML = "";
+let my_divs = d3.select("#statsPanel").selectAll("div").data(node_data);
 
-data.forEach(function(value) {
-    statsPanel.innerHTML += renderStatus(value);
-});
+my_divs.enter().append("div").attr("class", "statusDiv")
+    .text(function(d) {
+        return "<p>" + d.node + "</p>";
+    });
