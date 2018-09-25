@@ -2,3 +2,12 @@ div.statusDiv {
     border: black 1px solid;
 }
 
+div .veryBad {
+    background-color: red;
+}
+div .bad {
+    background-color: orange;
+}
+div .good {
+    background-color: greenyellow;
+}

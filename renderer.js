@@ -29,7 +29,22 @@ function fill_in_status() {
     // we only pull those out in the above select next time around
     my_divs
         .enter().append("div")
-        .attr("class", "top")
+        .attr("class", function(d) {
+            load_stat = Math.abs(1 - (d.load / d.total));
+            if ((d.type == 'BI') || (d.type == 'IC')) {
+                alert_class = "safe"
+            }
+            else if (load_stat >= 0.1) {
+                alert_class = "veryBad";
+            }
+            else if (load_stat >= 0.05) {
+                alert_class = "bad";
+            }
+            else {
+                alert_class = "good";
+            }
+            return "top " + alert_class;
+        })
         .merge(my_divs)
         .text(function (d) {
             return d.node;
@@ -41,7 +56,9 @@ function fill_in_status() {
         .enter().append("div")
         .attr("class", "scoreDiv")
         .text(function (d) {
-            return [d.allocated, d.total, d.load].join(", ");
+            load_stat = d.load / d.total;
+            difference = Math.abs(1 - load_stat);
+            return [d.allocated, d.total, d.load, load_stat, difference].join(", ");
         })
     ;
 }
