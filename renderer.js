@@ -10,6 +10,30 @@ d3 = require('d3');
  */
 function fill_in_status() {
 
+    /**
+     * Given a node type and a measure of the difference between expected
+     * and actual work effort, return a string that indicates the status in
+     * the form of a CSS class name
+     * @param type
+     * @param proportion
+     */
+    function get_status_class(type, proportionGap) {
+        let alert_class = "";
+        if ((type == 'BI') || (type == 'IC')) {
+            alert_class = "safe"
+        }
+        else if (proportionGap >= 0.1) {
+            alert_class = "veryBad";
+        }
+        else if (proportionGap >= 0.05) {
+            alert_class = "bad";
+        }
+        else {
+            alert_class = "good";
+        }
+        return alert_class;
+    }
+
     // Get the data from some data source or another
     let node_data = ds();
 
@@ -31,18 +55,7 @@ function fill_in_status() {
         .enter().append("div")
         .attr("class", function(d) {
             load_stat = Math.abs(1 - (d.load / d.total));
-            if ((d.type == 'BI') || (d.type == 'IC')) {
-                alert_class = "safe"
-            }
-            else if (load_stat >= 0.1) {
-                alert_class = "veryBad";
-            }
-            else if (load_stat >= 0.05) {
-                alert_class = "bad";
-            }
-            else {
-                alert_class = "good";
-            }
+            let alert_class = get_status_class(d.type, load_stat);
             return "top " + alert_class;
         })
         .merge(my_divs)

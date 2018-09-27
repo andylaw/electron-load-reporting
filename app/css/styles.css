@@ -11,3 +11,7 @@ div .bad {
 div .good {
     background-color: greenyellow;
 }
+
+div .safe {
+    background-color: lightcyan;
+}
