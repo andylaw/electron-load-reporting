@@ -18,7 +18,7 @@ function do_svg_panel(svg_panel, load_data) {
     const panel_right_headroom = 100;
     const canvas_width = name_column_width + histo_100_width + type_column_width + panel_right_headroom;
     const padding_top = 1;
-    const padding_bottom = 0;
+    const padding_bottom = 1;
     const inner_bar_height = 4;
     const outer_bar_padding = 6;
     const outer_bar_height = inner_bar_height + (outer_bar_padding * 2);
@@ -47,7 +47,7 @@ function do_svg_panel(svg_panel, load_data) {
             .attr("x", name_column_width - name_column_right_pad)
             .attr("y", y_offset + font_padding)
             .attr("font-size", font_size)
-            .attr("font", "Courier")
+            .attr("font-family", "sans-serif")
             .attr("text-anchor", "end")
             .text(item.node);
 
@@ -55,6 +55,7 @@ function do_svg_panel(svg_panel, load_data) {
             .attr("x", type_column_start + (type_column_width / 2))
             .attr("y", y_offset + font_padding)
             .attr("font-size", font_size)
+            .attr("font-family", "sans-serif")
             .attr("text-anchor", "middle")
             .text(item.type);
 
