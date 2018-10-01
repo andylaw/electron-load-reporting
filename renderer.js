@@ -4,18 +4,21 @@
 ds = require('./app/js/datasource.js');
 d3 = require('d3');
 
+const bar_scale = d3.scaleLinear().domain([0.8, 1, 1.2]).range(['red', 'green', 'red']);
+
 function do_svg_panel(svg_panel, load_data) {
 
     const name_column_start = 0;
     const name_column_width = 250;
+    const name_column_right_pad = 5;
     const type_column_start = name_column_start + name_column_width;
     const type_column_width = 100;
     const histo_column_start = type_column_start + type_column_width;
     const histo_100_width = 400;
     const panel_right_headroom = 100;
     const canvas_width = name_column_width + histo_100_width + type_column_width + panel_right_headroom;
-    const padding_top = 4;
-    const padding_bottom = 4;
+    const padding_top = 1;
+    const padding_bottom = 0;
     const inner_bar_height = 4;
     const outer_bar_padding = 6;
     const outer_bar_height = inner_bar_height + (outer_bar_padding * 2);
@@ -41,10 +44,19 @@ function do_svg_panel(svg_panel, load_data) {
                 .attr("y", y_offset);
         }
         svg_canvas.append("text")
-            .attr("x", 0)
+            .attr("x", name_column_width - name_column_right_pad)
             .attr("y", y_offset + font_padding)
             .attr("font-size", font_size)
+            .attr("font", "Courier")
+            .attr("text-anchor", "end")
             .text(item.node);
+
+        svg_canvas.append("text")
+            .attr("x", type_column_start + (type_column_width / 2))
+            .attr("y", y_offset + font_padding)
+            .attr("font-size", font_size)
+            .attr("text-anchor", "middle")
+            .text(item.type);
 
         let used_proportion = item.allocated / item.total;
         let load_proportion = item.load / item.allocated;
@@ -53,14 +65,14 @@ function do_svg_panel(svg_panel, load_data) {
         svg_canvas.append("rect")
             .attr("height", outer_bar_height)
             .attr("width", histo_100_width * used_proportion)
-            .attr("fill", "grey")
+            .attr("fill", bar_scale(used_proportion))
             .attr("x", histo_column_start)
             .attr("y", y_offset + padding_top);
 
         svg_canvas.append("rect")
             .attr("height", inner_bar_height)
             .attr("width", histo_100_width * load_absolute)
-            .attr("fill", "darkgrey")
+            .attr("fill", bar_scale(load_proportion))
             .attr("x", histo_column_start)
             .attr("y", y_offset + padding_top + outer_bar_padding);
 
