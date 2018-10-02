@@ -12,8 +12,10 @@ function do_svg_panel(svg_panel, load_data) {
     const name_column_width = 250;
     const name_column_right_pad = 5;
     const type_column_start = name_column_start + name_column_width;
-    const type_column_width = 100;
-    const histo_column_start = type_column_start + type_column_width;
+    const type_column_width = 80;
+    const alarm_column_start = type_column_start + type_column_width;
+    const alarm_column_width = 40;
+    const histo_column_start = alarm_column_start + alarm_column_width;
     const histo_100_width = 400;
     const panel_right_headroom = 100;
     const canvas_width = name_column_width + histo_100_width + type_column_width + panel_right_headroom;
@@ -64,6 +66,14 @@ function do_svg_panel(svg_panel, load_data) {
             .attr("font-family", "sans-serif")
             .attr("text-anchor", "middle")
             .text(item.type);
+
+        svg_canvas.append("text")
+            .attr("x", alarm_column_start + (alarm_column_width / 2))
+            .attr("y", y_offset + font_padding)
+            .attr("font-size", font_size)
+            .attr("font-family", "sans-serif")
+            .attr("text-anchor", "middle")
+            .text(item.flags);
 
         let used_proportion = item.allocated / item.total;
         let load_proportion = item.load / item.allocated;
