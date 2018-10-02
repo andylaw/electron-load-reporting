@@ -96,4 +96,13 @@ function do_svg_panel(svg_panel, load_data) {
     });
 }
 
-do_svg_panel(d3.select("#svgPanel"), ds());
+
+function refresh_svg_panel() {
+    do_svg_panel(d3.select("#svgPanel"), ds());
+}
+
+d3.select("#refresh")
+    .on("click", refresh_svg_panel);
+
+refresh_svg_panel();
+
