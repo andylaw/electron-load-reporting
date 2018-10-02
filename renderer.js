@@ -4,7 +4,7 @@
 ds = require('./app/js/datasource.js');
 d3 = require('d3');
 
-const bar_scale = d3.scaleLinear().domain([0.8, 1, 1.2]).range(['red', 'green', 'red']);
+const bar_scale = d3.scaleLinear().domain([0.8, 1, 1.2]).range(['#E69F00', '#CCCCCC', '#E69F00']);
 
 function do_svg_panel(svg_panel, load_data) {
 
@@ -35,9 +35,9 @@ function do_svg_panel(svg_panel, load_data) {
         .attr("height", required_height);
 
     load_data.sort(function(a, b) {
-            let return_value = ('' + a.type).localeCompare(b.type)
-            if (return_value == 0) {
-                return_value =  ('' + a.node).localeCompare(b.node)
+            let return_value = ('' + a.type).localeCompare(b.type);
+            if (return_value === 0) {
+                return_value =  ('' + a.node).localeCompare(b.node);
             }
             return return_value;
         }).forEach(function(item, index) {
