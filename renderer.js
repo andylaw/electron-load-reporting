@@ -32,7 +32,13 @@ function do_svg_panel(svg_panel, load_data) {
         .attr("width", canvas_width)
         .attr("height", required_height);
 
-    load_data.forEach(function(item, index) {
+    load_data.sort(function(a, b) {
+            let return_value = ('' + a.type).localeCompare(b.type)
+            if (return_value == 0) {
+                return_value =  ('' + a.node).localeCompare(b.node)
+            }
+            return return_value;
+        }).forEach(function(item, index) {
         let y_offset = (index * row_height);
 
         if (index % 2) {
