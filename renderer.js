@@ -97,12 +97,83 @@ function do_svg_panel(svg_panel, load_data) {
 }
 
 
+function do_stats_table(stats_panel, load_data) {
+
+    // sort the data
+    let sorted_data = load_data.sort(function(a, b) {
+        let return_value = ('' + a.type).localeCompare(b.type);
+        if (return_value === 0) {
+            return_value =  ('' + a.node).localeCompare(b.node);
+        }
+        return return_value;
+    });
+
+    // try to find a table inside the object that we've been given
+    // (the statsPanel)
+    let table = stats_panel.select("table");
+    // if there is not table, then make one, fill in the header and make an empty body
+    if (table.empty()) {
+        table = stats_panel.append("table");
+        let header_row = table.append("thead").append("tr");
+        header_row.append("th").text("Node");
+        header_row.append("th").text("Type");
+        header_row.append("th").text("Flags");
+        header_row.append("th").text("Load");
+        table.append("tbody")
+    }
+    // grab all the rows inside the body, matching against the node name as id
+    let table_rows = table.select("tbody").selectAll("tr").data(sorted_data, function(node) { return node.node});
+
+    // delete any rows from the table that don't match the data
+    table_rows.exit().remove();
+
+    // create new rows as required and merge with the existing data
+    let new_rows = table_rows.enter()
+        .append("tr")
+        .attr("id", function(node) { return node.node; } );
+
+    new_rows
+        .append("td")
+        .text(function(node) {
+            return node.node;
+        })
+        .attr("class", "node");
+
+    new_rows
+        .append("td")
+        .text(function(node) {
+            return node.type;
+        })
+        .attr("class", "type");
+
+    new_rows
+        .append("td")
+        .text(function(node) {
+            return node.flags;
+        })
+        .attr("class", "flags");
+
+    new_rows
+        .append("td")
+        .attr("class", "load");
+
+    let load_cells = d3.selectAll("td.load").data(sorted_data, function(node) { return node.node});
+
+    load_cells.text(function (node) {
+        return node.load;
+    })
+}
+
+function refresh_stats_table() {
+    do_stats_table(d3.select("#statsPanel"), ds());
+}
+
 function refresh_svg_panel() {
-    do_svg_panel(d3.select("#svgPanel"), ds());
+//    do_svg_panel(d3.select("#svgPanel"), ds());
 }
 
 d3.select("#refresh")
-    .on("click", refresh_svg_panel);
+    .on("click", refresh_stats_table);
 
 refresh_svg_panel();
-
+refresh_stats_table();
