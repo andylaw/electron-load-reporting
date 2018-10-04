@@ -1,6 +1,6 @@
 
 function getLoadData() {
-    return [
+    let base_data = [
         { node: "staging@node2i13.ecdf.ed.ac.uk", type: "BI", reserved: 0, allocated: 0, total: 64, load: 3.01, flags: ""},
         { node: "staging@node2i14.ecdf.ed.ac.uk", type: "BI", reserved: 0, allocated: 0, total: 64, load: 0.01, flags: ""},
         { node: "eddie@node2i16.ecdf.ed.ac.uk", type: "BPC", reserved: 0, allocated: 16, total: 16, load: 15.41, flags: ""},
@@ -68,6 +68,13 @@ function getLoadData() {
         { node: "eddie@node2b15.ecdf.ed.ac.uk", type: "BPC", reserved: 0, allocated: 32, total: 32, load: 32.04, flags: ""},
         { node: "eddie@node2b16.ecdf.ed.ac.uk", type: "BPC", reserved: 0, allocated: 31, total: 32, load: 31.97, flags: ""}
         ];
+    base_data.forEach( function (node) {
+        node.flags = "";
+        if (Math.random() < 0.1) {
+            node.flags = "ad";
+        }
+    })
+    return base_data;
 }
 
 module.exports = getLoadData
