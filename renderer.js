@@ -172,22 +172,46 @@ function do_stats_table(stats_panel, load_data) {
 
     new_rows
         .append("td")
-        .attr("class", "load");
+        .attr("class", "load")
+        .append("svg:svg")
+        .attr("class", "loadsvg")
+        .attr("width", canvas_width)
+        .attr("height", row_height);
 
-    let load_cells = d3.selectAll("td.load").data(sorted_data, function (node) {
+    let load_cells_svg = d3.selectAll("td.load svg").data(sorted_data, function (node) {
         return node.node
     });
 
-    load_cells.text(function (node) {
-        return node.load;
-    })
+    load_cells_svg.each(function (item, index) {
+
+        let svg_element = d3.select(this);
+
+        svg_element.selectAll("rect").remove();
+
+        let used_proportion = item.allocated / item.total;
+        let load_proportion = item.load / item.allocated;
+        let load_absolute = item.load / item.total;
+
+        svg_element.append("rect")
+            .attr("height", outer_bar_height)
+            .attr("width", histo_100_width * used_proportion)
+            .attr("fill", bar_scale(used_proportion))
+            .attr("x", 0)
+            .attr("y", padding_top);
+
+        svg_element.append("rect")
+            .attr("height", inner_bar_height)
+            .attr("width", histo_100_width * load_absolute)
+            .attr("fill", bar_scale(load_proportion))
+            .attr("x", 0)
+            .attr("y", padding_top + outer_bar_padding);
+
+    });
 
     let all_rows = new_rows.merge(table_rows);
     all_rows.classed("flag", function (node) {
-        if (node.flags === "") {
-            return false;
-        }
-        return true;
+        return node.flags !== "";
+
     });
     let flag_cells = d3.selectAll("td.flags").data(sorted_data, function (node) {
         return node.node

@@ -73,6 +73,7 @@ function getLoadData() {
         if (Math.random() < 0.1) {
             node.flags = "ad";
         }
+        node.load = node.load * (1 + (Math.random() - 0.5) * 0.2);
     })
     return base_data;
 }
