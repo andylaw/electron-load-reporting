@@ -1,17 +1,19 @@
-div.statusDiv {
-    border: black 1px solid;
+body {
+    font-family: Arial, sans-serif;
 }
 
-div .veryBad {
-    background-color: red;
-}
-div .bad {
-    background-color: orange;
-}
-div .good {
-    background-color: greenyellow;
+td.node {
+    text-align: right;
 }
 
-div .safe {
-    background-color: lightcyan;
+td.type {
+    text-align: center;
+}
+
+table tr:nth-child(odd) td{
+    background-color: aliceblue;
+}
+
+table tr:nth-child(even) td{
+    background-color: bisque;
 }
