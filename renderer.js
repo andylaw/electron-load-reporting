@@ -4,7 +4,7 @@
 ds = require('./app/js/datasource.js');
 d3 = require('d3');
 
-const bar_scale = d3.scaleLinear().domain([0.8, 1, 1.2]).range(['#E69F00', '#CCCCCC', '#E69F00']);
+const bar_scale = d3.scaleLinear().domain([0.8, 1, 1.2]).range(['#E69F00', '#DDDDDD', '#E69F00']);
 
 function do_stats_table(stats_panel, load_data) {
 
